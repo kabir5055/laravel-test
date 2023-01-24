@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,12 +21,17 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::post('/dropzone', 'HomeController@index')->name('file-upload');
+Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+Route::post('/dropzone', 'App\Http\Controllers\HomeController@index')->name('file-upload');
 
 Route::middleware('auth')->group(function () {
-    Route::resource('product-variant', 'VariantController');
-    Route::resource('product', 'ProductController');
-    Route::resource('blog', 'BlogController');
-    Route::resource('blog-category', 'BlogCategoryController');
+    Route::resource('product-variant', 'App\Http\Controllers\VariantController');
+    Route::resource('product', 'App\Http\Controllers\ProductController');
+    Route::post('/save-product',[ProductController::class,'saveProduct'])->name('save.product');
+    Route::get('/manage-product',[ProductController::class,'manageProduct'])->name('manage.product');
+    Route::get('/filter-product',[ProductController::class,'filterProduct'])->name('filter.product');
+    Route::get('/edit-product/{id}',[ProductController::class,'editProduct'])->name('edit.product');
+    Route::post('/update-product',[ProductController::class,'updateProduct'])->name('update.product');
+    Route::resource('blog', 'App\Http\Controllers\BlogController');
+    Route::resource('blog-category', 'App\Http\Controllers\BlogCategoryController');
 });
