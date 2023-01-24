@@ -56,9 +56,15 @@
             </div>
         </div>
 
-        <div class="card-footer d-sm-flex align-items-center justify-content-between mb-4">
-            <p>1 to 10 out of 100</p>
-            {{ $variants->links() }}
+        <div class="card-footer">
+            <div class="row justify-content-between">
+                <div class="col-md-6">
+                    <p>Showing {{ $variants->firstItem() }} to {{ $variants->lastItem() }} out of {{$variants->total()}}</p>
+                </div>
+                <div class="col-md-4">
+                    {{ $variants->links() }}
+                </div>
+            </div>
         </div>
     </div>
 @endsection
